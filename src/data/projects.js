@@ -29,7 +29,7 @@ export const projects = [
         title: "Personalización de Facturación",
         description: "Adaptación del flujo de facturación para integrar pagos móviles y retenciones legales.",
         fullDescription: "Optimización del proceso de facturación electrónica y física para cumplir con las normativas del SENIAT. Se integraron módulos de retención de IVA e IGTF de forma transparente para el usuario final.",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2340&auto=format&fit=crop",
+        image: "/odoo/facturacion-odoo.png",
         tags: ["Odoo v17", "Contabilidad"],
         features: ["Generación de comprobantes de retención", "Validación de RIF en tiempo real", "Formatos de factura personalizados"],
         videoUrl: ""
