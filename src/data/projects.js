@@ -4,7 +4,7 @@ export const projects = [
         title: "Módulo de Importaciones Odoo",
         description: "Implementación y asesoría del módulo de importaciones permitiendo el rastreo y costeo de embarques.",
         fullDescription: "Este proyecto consistió en la creación de un sistema integral de seguimiento para importaciones. Se integraron cálculos de aranceles, costos de flete y gastos de nacionalización para obtener el costo real del producto puesto en almacén.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+        image: "/odoo/odoo-importaciones.png",
         tags: ["Odoo v17", "Importaciones", "Compras"],
         features: ["Cálculo automático de costos en destino", "Reportes de proyección de costos"],
         videoUrl: ""
