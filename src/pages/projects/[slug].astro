@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { projects } from '../../data/projects.js';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { ...project },
+  }));
+}
+
+const { title, description, fullDescription, image, tags, features, videoUrl } = Astro.props;
+---
+
+<BaseLayout title={`${title} | Euclides Ollarves`}>
+	<ThemeToggle />
+	
+	<main class="max-w-4xl mx-auto px-6 py-20 space-y-12">
+		<a href="/" class="inline-flex items-center gap-2 text-zinc-500 hover:text-indigo-500 transition-colors group">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+			Volver al inicio
+		</a>
+
+		<header class="space-y-6">
+			<div class="flex flex-wrap gap-2">
+				{tags.map(tag => (
+					<span class="text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
+						{tag}
+					</span>
+				))}
+			</div>
+			<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+				{title}
+			</h1>
+			<p class="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl">
+				{description}
+			</p>
+		</header>
+
+		<div class="aspect-video rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-zinc-100 dark:bg-zinc-900">
+			<img src={image} alt={title} class="w-full h-full object-contain" />
+		</div>
+
+		<section class="grid md:grid-cols-3 gap-12 pt-10">
+			<div class="md:col-span-2 space-y-6">
+				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
+					<span class="w-8 h-px bg-indigo-500"></span> Resumen
+				</h2>
+				<p class="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+					{fullDescription}
+				</p>
+			</div>
+			
+			<div class="space-y-6">
+				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
+					<span class="w-8 h-px bg-indigo-500"></span> Características
+				</h2>
+				<ul class="space-y-4">
+					{features.map(feature => (
+						<li class="flex items-start gap-3 text-zinc-600 dark:text-zinc-400">
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 mt-1 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+							<span>{feature}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+
+		{videoUrl && (
+			<section class="space-y-8 pt-20 border-t border-zinc-200 dark:border-zinc-800">
+				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
+					<span class="w-8 h-px bg-indigo-500"></span> Demostración en Video
+				</h2>
+				<div class="aspect-video w-full rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-zinc-900">
+					<iframe 
+						src={videoUrl.replace('/view', '/preview').replace('?usp=sharing','')} 
+						class="w-full h-full" 
+						allow="autoplay" 
+						allowfullscreen
+					></iframe>
+				</div>
+				<p class="text-sm text-zinc-500 text-center italic">
+					Video demostrativo del flujo de trabajo y funcionalidades implementadas.
+				</p>
+			</section>
+		)}
+
+		<footer class="pt-20 pb-10 text-center">
+			<a href="mailto:euclidesollarves@gmail.com" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold transition-all duration-300 shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-1 hover:scale-105 group relative overflow-hidden">
+				<span class="relative z-10 flex items-center gap-2">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+					Consultar sobre este desarrollo
+				</span>
+				<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+			</a>
+		</footer>
+	</main>
+</BaseLayout>
