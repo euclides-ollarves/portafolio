@@ -4,7 +4,10 @@ interface Props {
 	description?: string;
 }
 
-const { title, description = "Portfolio de Euclides Ollarves - Especialista en Odoo" } = Astro.props;
+const { 
+	title, 
+	description = "Portafolio de Euclides Ollarves - Ingeniero en Informática, Especialista Odoo ERP (v13 a v19), AI Solutions & DevOps." 
+} = Astro.props;
 
 import '../styles/global.css';
 ---
@@ -13,14 +16,24 @@ import '../styles/global.css';
 <html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<meta name="author" content="Euclides Ollarves" />
+		<meta name="keywords" content="Odoo, Odoo ERP, Python, PostgreSQL, SENIAT, Localización Venezolana, Docker, AI Agents, Portafolio" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+
+		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+		
 		<script is:inline>
 			const theme = (() => {
 				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -40,15 +53,14 @@ import '../styles/global.css';
 			window.localStorage.setItem('theme', theme);
 		</script>
 	</head>
-	<body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-['Inter',sans-serif] transition-colors duration-300 antialiased selection:bg-indigo-500/30">
+	<body class="bg-zinc-50 text-zinc-900 dark:bg-[#090b10] dark:text-zinc-100 font-['Inter',sans-serif] transition-colors duration-300 antialiased selection:bg-indigo-500/20 selection:text-indigo-400 min-h-screen relative overflow-x-hidden">
+		<!-- Subtle ambient background gradients -->
+		<div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+			<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-transparent blur-3xl rounded-full dark:from-indigo-600/15 dark:via-purple-600/10"></div>
+			<div class="absolute top-[45%] -left-32 w-[500px] h-[350px] bg-gradient-to-r from-blue-500/5 to-transparent blur-3xl rounded-full dark:from-blue-600/10"></div>
+			<div class="absolute bottom-10 -right-32 w-[550px] h-[350px] bg-gradient-to-l from-indigo-500/5 to-transparent blur-3xl rounded-full dark:from-indigo-600/10"></div>
+		</div>
+
 		<slot />
 	</body>
 </html>
-
-<style is:global>
-	:root {
-		--accent: 139, 92, 246;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-	}
-</style>

@@ -10,68 +10,177 @@ export function getStaticPaths() {
   }));
 }
 
-const { title, description, fullDescription, image, tags, features, videoUrl } = Astro.props;
+const { 
+  title, 
+  category, 
+  client, 
+  year, 
+  description, 
+  fullDescription, 
+  image, 
+  tags, 
+  features, 
+  metrics, 
+  videoUrl 
+} = Astro.props;
 ---
 
-<BaseLayout title={`${title} | Euclides Ollarves`}>
+<BaseLayout title={`${title} | Euclides Ollarves - Especialista Odoo`}>
 	<ThemeToggle />
 	
-	<main class="max-w-4xl mx-auto px-6 py-20 space-y-12">
-		<a href={`${import.meta.env.BASE_URL}/`} class="inline-flex items-center gap-2 text-zinc-500 hover:text-indigo-500 transition-colors group">
-			<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-			Volver al inicio
-		</a>
+	<main class="max-w-4xl mx-auto px-6 py-12 md:py-20 space-y-12">
+		<!-- Back Button & Breadcrumbs -->
+		<div class="flex items-center justify-between">
+			<a 
+				href={`${import.meta.env.BASE_URL}/#proyectos`} 
+				class="inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+				Volver a todos los proyectos
+			</a>
+			{client && (
+				<span class="text-xs font-mono px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+					Cliente: {client}
+				</span>
+			)}
+		</div>
 
+		<!-- Project Header -->
 		<header class="space-y-6">
-			<div class="flex flex-wrap gap-2">
-				{tags.map(tag => (
-					<span class="text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
-						{tag}
+			<div class="flex flex-wrap items-center gap-2">
+				<span class="text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
+					{category || "Desarrollo Odoo"}
+				</span>
+				{year && (
+					<span class="text-xs font-mono px-2.5 py-1 rounded-md text-zinc-500 border border-zinc-200 dark:border-zinc-800">
+						{year}
 					</span>
-				))}
+				)}
 			</div>
-			<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+
+			<h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight">
 				{title}
 			</h1>
-			<p class="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl">
+
+			<p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl">
 				{description}
 			</p>
 		</header>
 
-		<div class="aspect-video rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-zinc-100 dark:bg-zinc-900">
-			<img src={image.startsWith('http') ? image : `${import.meta.env.BASE_URL}${image}`} alt={title} class="w-full h-full object-contain" />
+		<!-- Main Project Visual -->
+		<div class="aspect-video rounded-3xl overflow-hidden border border-zinc-200/80 dark:border-zinc-800/80 shadow-2xl bg-zinc-100 dark:bg-zinc-900/60 p-4 md:p-8 flex items-center justify-center">
+			<img 
+				src={image.startsWith('http') ? image : `${import.meta.env.BASE_URL}${image}`} 
+				alt={title} 
+				class="w-full h-full object-contain max-h-[500px]" 
+			/>
 		</div>
 
-		<section class="grid md:grid-cols-3 gap-12 pt-10">
+		<!-- Metrics Highlight (if available) -->
+		{metrics && metrics.length > 0 && (
+			<div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+				{metrics.map((m: { label: string; value: string }) => (
+					<div class="p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800/80 text-center">
+						<span class="block text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+							{m.value}
+						</span>
+						<span class="block text-xs font-medium text-zinc-500 mt-1">
+							{m.label}
+						</span>
+					</div>
+				))}
+			</div>
+		)}
+
+		<!-- Project Details Grid -->
+		<section class="grid md:grid-cols-3 gap-10 pt-4">
+			<!-- Detailed Summary (2 cols) -->
 			<div class="md:col-span-2 space-y-6">
-				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
-					<span class="w-8 h-px bg-indigo-500"></span> Resumen
+				<h2 class="text-2xl font-bold flex items-center gap-3 text-zinc-900 dark:text-zinc-100">
+					<span class="w-8 h-px bg-indigo-500"></span> Resumen Técnico
 				</h2>
-				<p class="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
-					{fullDescription}
-				</p>
+				<div class="prose dark:prose-invert max-w-none text-base md:text-lg leading-relaxed text-zinc-700 dark:text-zinc-300 space-y-4">
+					<p>{fullDescription}</p>
+				</div>
+
+				<!-- Features list -->
+				<div class="pt-6 space-y-4">
+					<h3 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+						Capacidades y Entregables
+					</h3>
+					<ul class="space-y-3">
+						{features.map((feature: string) => (
+							<li class="flex items-start gap-3 text-sm md:text-base text-zinc-600 dark:text-zinc-300">
+								<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+								<span>{feature}</span>
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 			
+			<!-- Technical Info Box (1 col) -->
 			<div class="space-y-6">
-				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
-					<span class="w-8 h-px bg-indigo-500"></span> Características
-				</h2>
-				<ul class="space-y-4">
-					{features.map(feature => (
-						<li class="flex items-start gap-3 text-zinc-600 dark:text-zinc-400">
-							<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 mt-1 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-							<span>{feature}</span>
-						</li>
-					))}
-				</ul>
+				<div class="p-6 rounded-3xl bg-zinc-100/60 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
+					<h3 class="text-sm font-bold uppercase tracking-wider text-zinc-500">
+						Ficha Técnica
+					</h3>
+
+					<div class="space-y-3 text-sm">
+						{client && (
+							<div>
+								<span class="block text-xs text-zinc-400">Organización / Entorno</span>
+								<span class="font-medium text-zinc-800 dark:text-zinc-200">{client}</span>
+							</div>
+						)}
+						{year && (
+							<div>
+								<span class="block text-xs text-zinc-400">Periodo</span>
+								<span class="font-medium text-zinc-800 dark:text-zinc-200">{year}</span>
+							</div>
+						)}
+						<div>
+							<span class="block text-xs text-zinc-400 mb-1.5">Stack Tecnológico</span>
+							<div class="flex flex-wrap gap-1.5">
+								{tags.map((tag: string) => (
+									<span class="text-xs px-2.5 py-1 rounded-md bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 font-medium text-zinc-700 dark:text-zinc-300">
+										{tag}
+									</span>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="p-6 rounded-3xl bg-indigo-500/5 border border-indigo-500/20 text-center space-y-3">
+					<h4 class="text-sm font-bold text-zinc-900 dark:text-zinc-100">¿Requieres un módulo similar?</h4>
+					<p class="text-xs text-zinc-500">Puedo adaptar o desarrollar este tipo de soluciones a la medida de tu infraestructura.</p>
+					<a 
+						href="mailto:euclidesollarves@gmail.com" 
+						class="inline-block w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-colors shadow-sm"
+					>
+						Consultar Proyecto
+					</a>
+				</div>
 			</div>
 		</section>
 
+		<!-- Video Section (if applicable) -->
 		{videoUrl && (
-			<section class="space-y-8 pt-20 border-t border-zinc-200 dark:border-zinc-800">
-				<h2 class="text-2xl font-bold font-serif flex items-center gap-3">
-					<span class="w-8 h-px bg-indigo-500"></span> Demostración en Video
-				</h2>
+			<section class="space-y-6 pt-12 border-t border-zinc-200 dark:border-zinc-800">
+				<div class="flex items-center justify-between">
+					<h2 class="text-2xl font-bold flex items-center gap-3 text-zinc-900 dark:text-zinc-100">
+						<span class="w-8 h-px bg-indigo-500"></span> Demostración en Video
+					</h2>
+					<a 
+						href={videoUrl} 
+						target="_blank" 
+						rel="noopener noreferrer" 
+						class="text-xs text-indigo-500 hover:underline inline-flex items-center gap-1"
+					>
+						Abrir en pestaña nueva ↗
+					</a>
+				</div>
 				<div class="aspect-video w-full rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-zinc-900">
 					<iframe 
 						src={videoUrl.replace('/view', '/preview').replace('?usp=sharing','')} 
@@ -80,19 +189,19 @@ const { title, description, fullDescription, image, tags, features, videoUrl } =
 						allowfullscreen
 					></iframe>
 				</div>
-				<p class="text-sm text-zinc-500 text-center italic">
-					Video demostrativo del flujo de trabajo y funcionalidades implementadas.
+				<p class="text-xs text-zinc-500 text-center italic">
+					Video de demostración del flujo operativo y la lógica de negocio implementada.
 				</p>
 			</section>
 		)}
 
-		<footer class="pt-20 pb-10 text-center">
-			<a href="mailto:euclidesollarves@gmail.com" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold transition-all duration-300 shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-1 hover:scale-105 group relative overflow-hidden">
-				<span class="relative z-10 flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-					Consultar sobre este desarrollo
-				</span>
-				<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+		<!-- Bottom CTA -->
+		<footer class="pt-16 pb-10 text-center space-y-4">
+			<a 
+				href={`${import.meta.env.BASE_URL}/#proyectos`} 
+				class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-sm font-semibold transition-colors"
+			>
+				← Volver al catálogo de proyectos
 			</a>
 		</footer>
 	</main>
